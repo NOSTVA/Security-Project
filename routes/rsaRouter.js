@@ -8,7 +8,7 @@ const express = require('express')
 const router = express.Router()
 const {e, modular_inverse, decrypt} = require('../controllers/RSA')
 
-p = 11
+p = 13
 q = 7
 n = p*q
 phi = (p-1)*(q-1)
@@ -26,8 +26,10 @@ router.post('/', async (req, res) => {
         char = decrypt(cipherList[i], d, n)
         msgList.push(chars[char])
     }
-    console.log("message: ", msgList.join(''))
-    res.json({message: 'Success: Message received!'})
+
+    console.log("(RSA) Encrypted message: ", cipherList.join(''))
+    console.log("(RSA) Decrypted message: ", msgList.join(''))
+    res.json({message: '(RSA) Message received!'})
 })
 
 
