@@ -40,9 +40,15 @@ body {
   border-radius: 16px;
 }
 
+.head {
+  display: flex;
+  align-items: baseline;
+}
+
 .title {
   font-size: 20px;
   font-weight: 600;
+  margin-right: 10px;
 }
 
 #RSA-form {

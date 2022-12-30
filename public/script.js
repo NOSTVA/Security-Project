@@ -30,20 +30,24 @@ btnRSA.addEventListener("click", async () => {
 
     msg = messageRSAField.value
     var cipherList = []
-    for (i=0; i<msg.length; i++) {
-        char = encrypt(chars.indexOf(msg[i]), e, n)
-        cipherList.push(char)
-    }
     
-    const options = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({cipherList}),
+    if (msg != "")
+    {
+        for (i=0; i<msg.length; i++) {
+            char = encrypt(chars.indexOf(msg[i]), e, n)
+            cipherList.push(char)
+        }
+        const options = {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({cipherList}),
+        }
+        const res = await fetch("/RSA", options)
+        const resData = await res.json()
+        console.log(resData)
+
     }
 
-    const res = await fetch("/RSA", options)
-    const resData = await res.json()
-    console.log(resData)
 
     
 

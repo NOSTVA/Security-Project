@@ -8,7 +8,7 @@ const express = require('express')
 const router = express.Router()
 const {e, modular_inverse, decrypt} = require('../controllers/RSA')
 
-p = 13
+p = 11
 q = 7
 n = p*q
 phi = (p-1)*(q-1)
