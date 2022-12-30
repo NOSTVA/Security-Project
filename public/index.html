@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <title>Information Security</title>
+  </head>
+  <body>
+    <div class="main">
+      <div class="container">
+        <div class="form-container">
+          <form action="javascript:void(0);" id="RSA-form">
+            <span class="title">RSA</span>
+            <label for="RSA-message-Field">
+              Public key is:
+              <span id="public-key"></span>
+            </label>
+            <textarea
+              id="RSA-message-Field"
+              placeholder="Write your message here!"
+            ></textarea>
+            <button role="button" id="send-RSA-btn">Send</button>
+          </form>
+        </div>
+        <div class="form-container">
+          <form action="javascript:void(0);" id="RSA-form">
+            <span class="title">3-DES</span>
+            <textarea
+              id="3DES-message-Field"
+              placeholder="Write your message here!"
+            ></textarea>
+            <button role="button" id="send-3DES-btn">Send</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bignumber.js@9.1.0/bignumber.min.js"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>
