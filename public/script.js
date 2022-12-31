@@ -61,17 +61,18 @@ window.onload = async function () {
     const key1 = DES_data.k1
     const key2 = DES_data.k2
 
-    // POST RSA encrypted message
-    btnRSA.addEventListener("click", async () => {
-        let msg = bin(message3DES.value);
+    // POST 3DES encrypted message
+    btn3DES.addEventListener("click", async () => {
+        let msg = message3DES.value;
 
         if (msg.length == 16) {
+            msg = bin(msg);
             let tripleEnc = encode(msg, key1);
             tripleEnc = decode(bin(tripleEnc), key2);
             tripleEnc = encode(bin(tripleEnc), key1);
             console.log(tripleEnc);
 
-            const options = {
+            const options3DES = {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -80,7 +81,7 @@ window.onload = async function () {
                     tripleEnc
                 }),
             }
-            const res3DES = await fetch("/DES", options)
+            const res3DES = await fetch("/DES", options3DES)
             const res3DESData = await res3DES.json()
             console.log(res3DESData)
         }
