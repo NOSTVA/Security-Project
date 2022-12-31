@@ -177,25 +177,3 @@ const des = (msg, key, subkeys) => {
 
 const encode = (msg, key) => des(msg, key, keySchedule(key));
 const decode = (msg, key) => des(msg, key, keySchedule(key).reverse());
-
-let key = bin("ASDSDFDSDFDERFDS"); // hex
-let msg = bin("ASDSDFDSDFDERFDS"); // hex
-let enc = encode(msg, key);
-
-console.log(enc); // => 85E813540F0AB405
-console.log(decode(bin(enc), key)); // => 0123456789ABCDEF
-
-// Triple DES (3DES) Example
-// Variant 2: Two keys (K1 = K3)
-
-let key2 = bin("0DAE3BF4ECCAD161");
-
-let tripleEnc = encode(msg, key);
-tripleEnc = decode(bin(tripleEnc), key2);
-tripleEnc = encode(bin(tripleEnc), key);
-console.log(tripleEnc); // => DDF3FFA6F0FC22DC
-
-let tripleDec = decode(bin(tripleEnc), key);
-tripleDec = encode(bin(tripleDec), key2);
-tripleDec = decode(bin(tripleDec), key);
-console.log(tripleDec); // => 0123456789ABCDEF
