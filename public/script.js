@@ -70,7 +70,6 @@ window.onload = async function () {
             let tripleEnc = encode(msg, key1);
             tripleEnc = decode(bin(tripleEnc), key2);
             tripleEnc = encode(bin(tripleEnc), key1);
-            console.log(tripleEnc);
 
             const options3DES = {
                 method: "POST",
