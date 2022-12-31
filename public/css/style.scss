@@ -1,3 +1,9 @@
+@font-face {
+  font-family: "Chirp";
+  src: url("../font/Chirp\ Web\ Bold.ttf");
+  font-weight: 1 999;
+}
+
 * {
   outline: none;
   box-sizing: border-box;
@@ -51,6 +57,7 @@ body {
 }
 
 .title {
+  font-family: "Chirp";
   font-size: 20px;
   font-weight: 600;
   margin-right: 8px;
