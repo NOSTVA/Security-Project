@@ -15,11 +15,6 @@ window.onload = async function () {
     const btn3DES = document.getElementById('send-3DES-btn')
 
 
-    function encodeRSA(msg, e, n) {
-        return BigNumber(msg).exponentiatedBy(e).modulo(n).toNumber();
-    }
-
-
     // GET RSA API
     const publicRSA_res = await fetch("/RSA")
     const publicRSA_data = await publicRSA_res.json()
@@ -34,7 +29,7 @@ window.onload = async function () {
 
         if (msg != "") {
             for (i = 0; i < msg.length; i++) {
-                char = encodeRSA(chars.indexOf(msg[i]), e, n)
+                char = encrypt(chars.indexOf(msg[i]), e, n)
                 cipherList.push(char)
             }
             const options = {
