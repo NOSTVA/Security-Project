@@ -28,6 +28,8 @@ window.onload = async function () {
         cipher_k2_List = []
         cipher_k3_List = []
 
+
+        // encrypting DES keys with RSA public key
         for (i = 0; i < k1.length; i++) {
             word = chars.indexOf(k1.charAt(i))
             char = encrypt(word, e, n)
@@ -47,6 +49,7 @@ window.onload = async function () {
         }
 
 
+        // sending the encrypted keys to server
         const options = {
             method: "POST",
             headers: {
@@ -66,7 +69,6 @@ window.onload = async function () {
         plainMessage = []
 
         for (i = 0; i < cipherMessage.length; i++) {
-
             let plainBlock = decode(bin(cipherMessage[i]), k1);
             plainBlock = encode(bin(plainBlock), k2);
             plainBlock = decode(bin(plainBlock), k3);
@@ -75,7 +77,8 @@ window.onload = async function () {
             plainMessage.push(ASCIIBlock)
         }
 
-        console.log(plainMessage.join(""))
+        console.log("cipher: ", cipherMessage.join("-"))
+        console.log("message: ", plainMessage.join(""))
     })
 
 }

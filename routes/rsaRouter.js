@@ -71,7 +71,7 @@ router.post('/', async (req, res) => {
     k3 = k3_List.join('')
 
     // Preparing message
-    let message = "this message is encrypted using des"
+    let message = "Information Security Project"
     let temp = message
     cipherData = []
 
