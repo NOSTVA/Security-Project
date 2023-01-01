@@ -8,6 +8,12 @@ const {
     decrypt
 } = require('../controllers/RSA')
 
+const {
+    hexToASCII,
+    decToHexa,
+    ASCIItoHEX
+} = require('../controllers/hex_acii')
+
 
 
 const {
@@ -58,17 +64,25 @@ router.post('/', async (req, res) => {
     k2 = k2_List.join('')
     k3 = k3_List.join('')
 
-    msg = "9854ffabefbb908a"
 
-    let tripleDec = encode(bin(msg), k1);
-    tripleDec = decode(bin(tripleDec), k2);
-    tripleDec = encode(bin(tripleDec), k3);
+    var data = "geeks for geeks";
 
-    console.log(tripleDec)
+    chipherData = []
+    for (i = 0; i < data.length; i++) {
+
+        char = data.charAt(i)
+        hexChar = ASCIItoHEX(char).padEnd(16, '0')
+
+        let chipherChar = encode(bin(hexChar), k1);
+        chipherChar = decode(bin(chipherChar), k2);
+        chipherChar = encode(bin(chipherChar), k3);
+
+        chipherData.push(chipherChar)
+    }
+
     res.json({
-        tripleDec
+        chipherData
     })
-
 })
 
 
