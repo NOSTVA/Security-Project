@@ -35,13 +35,13 @@ window.onload = async function () {
         }
 
         for (i = 0; i < k2.length; i++) {
-            word = chars.indexOf(k1.charAt(i))
+            word = chars.indexOf(k2.charAt(i))
             char = encrypt(word, e, n)
             cipher_k2_List.push(char)
         }
 
         for (i = 0; i < k3.length; i++) {
-            word = chars.indexOf(k1.charAt(i))
+            word = chars.indexOf(k3.charAt(i))
             char = encrypt(word, e, n)
             cipher_k3_List.push(char)
         }
