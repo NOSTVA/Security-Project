@@ -78,7 +78,7 @@ body {
   input:focus {
     font-family: inherit;
     font-size: 20px;
-    color: var(--txt);
+    color: rgb(29, 155, 240);
     resize: none;
     border: none;
     outline: none;
@@ -122,5 +122,5 @@ input:-webkit-autofill:active {
 }
 
 input:-webkit-autofill {
-  -webkit-text-fill-color: white !important;
+  -webkit-text-fill-color: rgb(29, 155, 240) !important;
 }

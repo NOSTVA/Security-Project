@@ -67,7 +67,13 @@ router.post('/', async (req, res) => {
     k2 = k2_List.join('')
     k3 = k3_List.join('')
 
+    console.log("Triple DES Keys:", {
+        k1,
+        k2,
+        k3
+    })
 
+    // Sending message to client
     var message = "0123456789asdassd()^&$%^@#$";
     chipherData = []
 
