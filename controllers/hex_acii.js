@@ -64,7 +64,3 @@ module.exports = {
     decToHexa,
     ASCIItoHEX
 }
-
-
-// console.log(hexToASCII("477265656b"));
-// console.log(ASCIItoHEX("G").padEnd(16, 'x'));

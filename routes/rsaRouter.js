@@ -62,24 +62,21 @@ router.post('/', async (req, res) => {
         k3_List.push(chars[char])
     }
 
+    ck1 = cipher_k1_List.join('')
+    ck2 = cipher_k2_List.join('')
+    ck3 = cipher_k3_List.join('')
 
     k1 = k1_List.join('')
     k2 = k2_List.join('')
     k3 = k3_List.join('')
 
-    console.log("Triple DES Keys:", {
-        k1,
-        k2,
-        k3
-    })
-
-    // Sending message to client
-    var message = "0123456789asdassd()^&$%^@#$";
+    // Preparing message
+    var message = "information security project";
     chipherData = []
 
     for (i = 0; i < message.length; i++) {
         char = message.charAt(i)
-        hexChar = ASCIItoHEX(char).padEnd(16, '0')
+        hexChar = ASCIItoHEX(char).padEnd(16, char)
 
         let chipherChar = encode(bin(hexChar), k1);
         chipherChar = decode(bin(chipherChar), k2);
@@ -88,6 +85,24 @@ router.post('/', async (req, res) => {
         chipherData.push(chipherChar)
     }
 
+
+    // Testing
+    console.log("Encrypted Triple DES Keys:", {
+        ck1,
+        ck2,
+        ck3
+    })
+    console.log("Triple DES Keys:", {
+        k1,
+        k2,
+        k3
+    })
+    console.log("Encrypted Message:",
+        chipherData.join(".")
+    )
+
+
+    // Sending data to client
     res.json({
         chipherData
     })
