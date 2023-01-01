@@ -79,10 +79,8 @@ router.post('/', async (req, res) => {
 
         block = temp.substring(0, 8)
         temp = temp.replace(block, "")
-        console.log(block)
 
         if (block.length < 8) block = block.padEnd(8, " ")
-
         hexBlock = ASCIItoHEX(block)
 
         let cipherBlock = encode(bin(hexBlock), k1);
