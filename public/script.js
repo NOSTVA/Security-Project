@@ -26,62 +26,69 @@ window.onload = async function () {
         k2 = DES_k2.value
         k3 = DES_k3.value
 
-        cipher_k1_List = []
-        cipher_k2_List = []
-        cipher_k3_List = []
+        // validation section
+        if (k1.length == 16 && k2.length == 16 && k3.length == 16 &&
+            k1.match(/^[0-9a-fA-F]+$/) && k2.match(/^[0-9a-fA-F]+$/) &&
+            k3.match(/^[0-9a-fA-F]+$/)) {
 
 
-        // encrypting DES keys with RSA public key
-        for (i = 0; i < k1.length; i++) {
-            word = chars.indexOf(k1.charAt(i))
-            char = encrypt(word, e, n)
-            cipher_k1_List.push(char)
+            cipher_k1_List = []
+            cipher_k2_List = []
+            cipher_k3_List = []
+
+
+            // encrypting DES keys with RSA public key
+            for (i = 0; i < k1.length; i++) {
+                word = chars.indexOf(k1.charAt(i))
+                char = encrypt(word, e, n)
+                cipher_k1_List.push(char)
+            }
+
+            for (i = 0; i < k2.length; i++) {
+                word = chars.indexOf(k2.charAt(i))
+                char = encrypt(word, e, n)
+                cipher_k2_List.push(char)
+            }
+
+            for (i = 0; i < k3.length; i++) {
+                word = chars.indexOf(k3.charAt(i))
+                char = encrypt(word, e, n)
+                cipher_k3_List.push(char)
+            }
+
+
+            // sending the encrypted keys to server
+            const options = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    cipher_k1_List,
+                    cipher_k2_List,
+                    cipher_k3_List
+                }),
+            }
+
+            const res = await fetch("/RSA", options)
+            const resData = await res.json()
+
+            cipherMessage = resData.cipherData
+            plainMessage = []
+
+            for (i = 0; i < cipherMessage.length; i++) {
+                let plainBlock = decode(bin(cipherMessage[i]), k3);
+                plainBlock = encode(bin(plainBlock), k2);
+                plainBlock = decode(bin(plainBlock), k1);
+
+                ASCIIBlock = hexToASCII(plainBlock)
+                plainMessage.push(ASCIIBlock)
+            }
+
+            serverCipherField.innerHTML = `<span>Cipher: </span> ${cipherMessage.join("-")}`
+            serverPlainField.innerHTML = `<span>Message: </span> ${plainMessage.join("")}`
+
         }
-
-        for (i = 0; i < k2.length; i++) {
-            word = chars.indexOf(k2.charAt(i))
-            char = encrypt(word, e, n)
-            cipher_k2_List.push(char)
-        }
-
-        for (i = 0; i < k3.length; i++) {
-            word = chars.indexOf(k3.charAt(i))
-            char = encrypt(word, e, n)
-            cipher_k3_List.push(char)
-        }
-
-
-        // sending the encrypted keys to server
-        const options = {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                cipher_k1_List,
-                cipher_k2_List,
-                cipher_k3_List
-            }),
-        }
-
-        const res = await fetch("/RSA", options)
-        const resData = await res.json()
-
-        cipherMessage = resData.cipherData
-        plainMessage = []
-
-        for (i = 0; i < cipherMessage.length; i++) {
-            let plainBlock = decode(bin(cipherMessage[i]), k3);
-            plainBlock = encode(bin(plainBlock), k2);
-            plainBlock = decode(bin(plainBlock), k1);
-
-            ASCIIBlock = hexToASCII(plainBlock)
-            plainMessage.push(ASCIIBlock)
-        }
-
-        serverCipherField.innerHTML = `<span>Cipher: </span> ${cipherMessage.join("-")}`
-        serverPlainField.innerHTML = `<span>Message: </span> ${plainMessage.join("")}`
-
     })
 
 }
