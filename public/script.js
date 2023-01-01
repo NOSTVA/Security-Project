@@ -62,21 +62,20 @@ window.onload = async function () {
         const res = await fetch("/RSA", options)
         const resData = await res.json()
 
-        cipherList = resData.chipherData
-        msgList = []
+        cipherMessage = resData.cipherData
+        plainMessage = []
 
-        for (i = 0; i < cipherList.length; i++) {
-            cipherChar = cipherList[i]
+        for (i = 0; i < cipherMessage.length; i++) {
 
-            let plainChar = decode(bin(cipherChar), k1);
-            plainChar = encode(bin(plainChar), k2);
-            plainChar = decode(bin(plainChar), k3);
+            let plainBlock = decode(bin(cipherMessage[i]), k1);
+            plainBlock = encode(bin(plainBlock), k2);
+            plainBlock = decode(bin(plainBlock), k3);
 
-            ASCIIChar = hexToASCII(plainChar)
-            msgList.push(ASCIIChar.charAt(0))
+            ASCIIBlock = hexToASCII(plainBlock)
+            plainMessage.push(ASCIIBlock)
         }
 
-        console.log(msgList.join(""))
+        console.log(plainMessage.join(""))
     })
 
 }

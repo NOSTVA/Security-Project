@@ -71,20 +71,26 @@ router.post('/', async (req, res) => {
     k3 = k3_List.join('')
 
     // Preparing message
-    var message = "information security project";
-    chipherData = []
+    let message = "this message is encrypted using des"
+    let temp = message
+    cipherData = []
 
-    for (i = 0; i < message.length; i++) {
-        char = message.charAt(i)
-        hexChar = ASCIItoHEX(char).padEnd(16, char)
+    while (temp != "") {
 
-        let chipherChar = encode(bin(hexChar), k1);
-        chipherChar = decode(bin(chipherChar), k2);
-        chipherChar = encode(bin(chipherChar), k3);
+        block = temp.substring(0, 8)
+        temp = temp.replace(block, "")
+        console.log(block)
 
-        chipherData.push(chipherChar)
+        if (block.length < 8) block = block.padEnd(8, " ")
+
+        hexBlock = ASCIItoHEX(block)
+
+        let cipherBlock = encode(bin(hexBlock), k1);
+        cipherBlock = decode(bin(cipherBlock), k2);
+        cipherBlock = encode(bin(cipherBlock), k3);
+
+        cipherData.push(cipherBlock)
     }
-
 
     // Testing
     console.log("Encrypted Triple DES Keys:", {
@@ -98,13 +104,12 @@ router.post('/', async (req, res) => {
         k3
     })
     console.log("Encrypted Message:",
-        chipherData.join(".")
+        cipherData.join("-")
     )
-
 
     // Sending data to client
     res.json({
-        chipherData
+        cipherData
     })
 })
 
