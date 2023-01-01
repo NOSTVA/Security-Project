@@ -69,9 +69,9 @@ window.onload = async function () {
         plainMessage = []
 
         for (i = 0; i < cipherMessage.length; i++) {
-            let plainBlock = decode(bin(cipherMessage[i]), k1);
+            let plainBlock = decode(bin(cipherMessage[i]), k3);
             plainBlock = encode(bin(plainBlock), k2);
-            plainBlock = decode(bin(plainBlock), k3);
+            plainBlock = decode(bin(plainBlock), k1);
 
             ASCIIBlock = hexToASCII(plainBlock)
             plainMessage.push(ASCIIBlock)
