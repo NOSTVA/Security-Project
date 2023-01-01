@@ -1,18 +1,16 @@
-chars = [' ', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
-    'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
-    'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
-    'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
-    'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
-]
+chars = ['a', 'b', 'c', 'd', 'e', 'f', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+
 
 
 window.onload = async function () {
 
     const publicKeyField = document.getElementById('public-key')
-    const messageRSAField = document.getElementById('RSA-message-Field')
-    const btnRSA = document.getElementById('send-RSA-btn')
-    const message3DES = document.getElementById('3DES-message-Field')
-    const btn3DES = document.getElementById('send-3DES-btn')
+    const DES_k1 = document.getElementById('DES-k1')
+    const DES_k2 = document.getElementById('DES-k2')
+    const DES_k3 = document.getElementById('DES-k3')
+    const btn = document.getElementById('send-btn')
+
+
 
 
     // GET RSA API
@@ -22,63 +20,67 @@ window.onload = async function () {
     const n = publicRSA_data.n
     publicKeyField.innerText = `(${e}, ${n})`
 
-    // POST RSA encrypted message
-    btnRSA.addEventListener("click", async () => {
-        let msg = messageRSAField.value
-        var cipherList = []
-
-        if (msg != "") {
-            for (i = 0; i < msg.length; i++) {
-                char = encrypt(chars.indexOf(msg[i]), e, n)
-                cipherList.push(char)
-            }
-            const options = {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    cipherList
-                }),
-            }
-            const res = await fetch("/RSA", options)
-            const resData = await res.json()
-            console.log(resData)
-        }
-    })
 
 
 
 
-    // GET 3DES API
-    const DES_res = await fetch("/DES")
-    const DES_data = await DES_res.json()
-    const key1 = DES_data.k1
-    const key2 = DES_data.k2
+
 
     // POST 3DES encrypted message
-    btn3DES.addEventListener("click", async () => {
-        let msg = message3DES.value;
+    btn.addEventListener("click", async () => {
 
-        if (msg.length == 16) {
-            msg = bin(msg);
-            let tripleEnc = encode(msg, key1);
-            tripleEnc = decode(bin(tripleEnc), key2);
-            tripleEnc = encode(bin(tripleEnc), key1);
 
-            const options3DES = {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    tripleEnc
-                }),
-            }
-            const res3DES = await fetch("/DES", options3DES)
-            const res3DESData = await res3DES.json()
-            console.log(res3DESData)
+        k1 = DES_k1.value
+        k2 = DES_k2.value
+        k3 = DES_k3.value
+
+        cipher_k1_List = []
+        cipher_k2_List = []
+        cipher_k3_List = []
+
+        for (i = 0; i < k1.length; i++) {
+            word = chars.indexOf(k1.charAt(i))
+            char = encrypt(word, e, n)
+            cipher_k1_List.push(char)
         }
+
+        for (i = 0; i < k2.length; i++) {
+            word = chars.indexOf(k1.charAt(i))
+            char = encrypt(word, e, n)
+            cipher_k2_List.push(char)
+        }
+
+        for (i = 0; i < k3.length; i++) {
+            word = chars.indexOf(k1.charAt(i))
+            char = encrypt(word, e, n)
+            cipher_k3_List.push(char)
+        }
+
+
+        const options = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                cipher_k1_List,
+                cipher_k2_List,
+                cipher_k3_List
+            }),
+        }
+
+        const res = await fetch("/RSA", options)
+        const resData = await res.json()
+
+        let DEScipher = decode(bin(resData.tripleDec), k1)
+        DEScipher = encode(bin(DEScipher), k2)
+        DEScipher = decode(bin(DEScipher), k3)
+
+        console.log(DEScipher)
+
+
+
+
     })
 
 }

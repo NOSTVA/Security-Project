@@ -12,27 +12,16 @@
       <div class="container">
         <div class="form-container">
           <form action="javascript:void(0);" id="RSA-form">
-            <span class="head"
-              ><span class="title">RSA</span>
+            <span class="head">
               <label for="RSA-message-Field">
                 Public-Key
                 <span id="public-key"></span> </label
             ></span>
-            <textarea
-              id="RSA-message-Field"
-              placeholder="Write your message here!"
-            ></textarea>
-            <button role="button" id="send-RSA-btn">Send</button>
-          </form>
-        </div>
-        <div class="form-container">
-          <form action="javascript:void(0);" id="RSA-form">
-            <span class="title">Triple DES</span>
-            <textarea
-              id="3DES-message-Field"
-              placeholder="Write your message here! (16 HEX)"
-            ></textarea>
-            <button role="button" id="send-3DES-btn">Send</button>
+            <input type="text" id="DES-k1" />
+            <input type="text" id="DES-k2" />
+            <input type="text" id="DES-k3" />
+
+            <button role="button" id="send-btn">Send</button>
           </form>
         </div>
       </div>
