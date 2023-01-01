@@ -3,6 +3,9 @@ chars = ['a', 'b', 'c', 'd', 'e', 'f', '0', '1', '2', '3', '4', '5', '6', '7', '
 
 window.onload = async function () {
     const publicKeyField = document.getElementById('public-key')
+    const serverCipherField = document.getElementById('cipher-msg')
+    const serverPlainField = document.getElementById('plain-msg')
+
     const DES_k1 = document.getElementById('DES-k1')
     const DES_k2 = document.getElementById('DES-k2')
     const DES_k3 = document.getElementById('DES-k3')
@@ -15,7 +18,6 @@ window.onload = async function () {
     const e = publicRSA_data.E
     const n = publicRSA_data.n
     publicKeyField.innerText = `(${e}, ${n})`
-
 
     // POST 3DES encrypted message
     btn.addEventListener("click", async () => {
@@ -77,8 +79,9 @@ window.onload = async function () {
             plainMessage.push(ASCIIBlock)
         }
 
-        console.log("cipher: ", cipherMessage.join("-"))
-        console.log("message: ", plainMessage.join(""))
+        serverCipherField.innerHTML = `<span>Cipher: </span> ${cipherMessage.join("-")}`
+        serverPlainField.innerHTML = `<span>Message: </span> ${plainMessage.join("")}`
+
     })
 
 }
