@@ -53,14 +53,12 @@ body {
 
 .head {
   display: flex;
+  flex-direction: column;
   align-items: baseline;
-}
+  gap: 10px;
 
-.title {
   font-family: "Chirp";
-  font-size: 20px;
-  font-weight: 600;
-  margin-right: 8px;
+  font-size: 17px;
 }
 
 #RSA-form {
@@ -76,16 +74,14 @@ body {
     }
   }
 
-  textarea {
+  input,
+  input:focus {
     font-family: inherit;
     font-size: 20px;
     color: var(--txt);
     resize: none;
-    width: 400px;
-    height: 100px;
     border: none;
     outline: none;
-    background: none;
     margin: 0;
     padding: 10px;
     border-bottom: 1px solid rgb(47, 51, 54);
@@ -106,4 +102,25 @@ body {
     cursor: pointer;
     margin-top: 6px;
   }
+}
+
+input[type="text"] {
+  background: transparent;
+  border: none;
+}
+
+input[type="text"]:focus {
+  background: transparent;
+}
+
+/* Change the white to any color */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px black inset !important;
+}
+
+input:-webkit-autofill {
+  -webkit-text-fill-color: white !important;
 }

@@ -1,16 +1,12 @@
 chars = ['a', 'b', 'c', 'd', 'e', 'f', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 
 
-
 window.onload = async function () {
-
     const publicKeyField = document.getElementById('public-key')
     const DES_k1 = document.getElementById('DES-k1')
     const DES_k2 = document.getElementById('DES-k2')
     const DES_k3 = document.getElementById('DES-k3')
     const btn = document.getElementById('send-btn')
-
-
 
 
     // GET RSA API
@@ -21,14 +17,8 @@ window.onload = async function () {
     publicKeyField.innerText = `(${e}, ${n})`
 
 
-
-
-
-
-
     // POST 3DES encrypted message
     btn.addEventListener("click", async () => {
-
 
         k1 = DES_k1.value
         k2 = DES_k2.value
@@ -76,32 +66,17 @@ window.onload = async function () {
         msgList = []
 
         for (i = 0; i < cipherList.length; i++) {
-
             cipherChar = cipherList[i]
 
             let plainChar = decode(bin(cipherChar), k1);
             plainChar = encode(bin(plainChar), k2);
             plainChar = decode(bin(plainChar), k3);
 
-
-            ACIIChar = hexToASCII(plainChar)
-            msgList.push(ACIIChar.charAt(0))
-
+            ASCIIChar = hexToASCII(plainChar)
+            msgList.push(ASCIIChar.charAt(0))
         }
 
         console.log(msgList.join(""))
-
-        // console.log(resData.chipherData)
-
-        // let DEScipher = decode(bin(resData.tripleDec), k1)
-        // DEScipher = encode(bin(DEScipher), k2)
-        // DEScipher = decode(bin(DEScipher), k3)
-
-        // console.log(DEScipher)
-
-
-
-
     })
 
 }

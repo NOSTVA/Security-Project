@@ -14,8 +14,6 @@ const {
     ASCIItoHEX
 } = require('../controllers/hex_acii')
 
-
-
 const {
     encode,
     decode,
@@ -30,32 +28,37 @@ E = e(phi)
 d = modular_inverse(E, phi)
 
 
-
-
+router.get('/', (req, res) => {
+    res.json({
+        E: E,
+        n: n
+    })
+})
 
 router.post('/', async (req, res) => {
 
-
-    cipherList1 = req.body.cipher_k1_List
-    cipherList2 = req.body.cipher_k2_List
-    cipherList3 = req.body.cipher_k3_List
+    const {
+        cipher_k1_List,
+        cipher_k2_List,
+        cipher_k3_List
+    } = req.body
 
     k1_List = []
     k2_List = []
     k3_List = []
 
-    for (i = 0; i < cipherList1.length; i++) {
-        char = decrypt(cipherList1[i], d, n)
+    for (i = 0; i < cipher_k1_List.length; i++) {
+        char = decrypt(cipher_k1_List[i], d, n)
         k1_List.push(chars[char])
     }
 
-    for (i = 0; i < cipherList2.length; i++) {
-        char = decrypt(cipherList2[i], d, n)
+    for (i = 0; i < cipher_k2_List.length; i++) {
+        char = decrypt(cipher_k2_List[i], d, n)
         k2_List.push(chars[char])
     }
 
-    for (i = 0; i < cipherList3.length; i++) {
-        char = decrypt(cipherList3[i], d, n)
+    for (i = 0; i < cipher_k3_List.length; i++) {
+        char = decrypt(cipher_k3_List[i], d, n)
         k3_List.push(chars[char])
     }
 
@@ -65,12 +68,11 @@ router.post('/', async (req, res) => {
     k3 = k3_List.join('')
 
 
-    var data = "geeks for geeks";
-
+    var message = "0123456789asdassd()^&$%^@#$";
     chipherData = []
-    for (i = 0; i < data.length; i++) {
 
-        char = data.charAt(i)
+    for (i = 0; i < message.length; i++) {
+        char = message.charAt(i)
         hexChar = ASCIItoHEX(char).padEnd(16, '0')
 
         let chipherChar = encode(bin(hexChar), k1);
@@ -82,14 +84,6 @@ router.post('/', async (req, res) => {
 
     res.json({
         chipherData
-    })
-})
-
-
-router.get('/', (req, res) => {
-    res.json({
-        E: E,
-        n: n
     })
 })
 
